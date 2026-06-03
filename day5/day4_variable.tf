@@ -22,7 +22,13 @@ variable "enviornment"{
     type = string
     default = "dev"
 }
+locals{
+    env = var.enviornment 
+    bucket_name = "${var.enviornment}-bucket"
+    vpc_name = "${var.enviornment}-vpc"
+    ec2_name = "${var.enviornment}-ec2-instance"
 
+}
 # ! configure provider
 provider "aws" {
     region = "ap-south-1"
@@ -31,7 +37,7 @@ provider "aws" {
 resource "aws_s3_bucket" "first_bucket" {
     bucket = "my-tf-test-bucket-12345654321"
     tags ={
-        Name = "my bucket"
+        Name = local.bucket_name
         Environment = var.enviornment
     }
 }
@@ -39,7 +45,7 @@ resource "aws_s3_bucket" "first_bucket" {
 resource "aws_vpc" "sample"{
     cidr_block = "10.0.1.0/16"
     tags = {
-        Name = "my_vpc"
+        Name = local.vpc_name
         Environment = var.enviornment
     }
 }
@@ -47,7 +53,7 @@ resource "aws_ec2_instance" "example" {
     ami = "ami-0c02fb55956c7d316"
     instance_type = "t2.micro"
     tags = {
-        Name = "my_ec2_instance"
+        Name = local.ec2_name
         Environment = var.enviornment
     }
 }
