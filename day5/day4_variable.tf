@@ -49,7 +49,7 @@ resource "aws_s3_bucket" "first_bucket" {
 }
 
 resource "aws_vpc" "sample"{
-    cidr_block = "10.0.1.0/16"
+    cidr_block = "10.0.0.0/16"
     region = var.region
     tags = {
         Name = local.vpc_name
@@ -57,8 +57,8 @@ resource "aws_vpc" "sample"{
     }
 }
 resource "aws_instance" "example" {
-    ami = "ami-0c02fb55956c7d316"
-    instance_type = "t2.micro"
+    ami = "ami-016f910f55cb4096d"
+    instance_type = "t3.micro"
     region = var.region
     tags = {
         Name = local.ec2_name
