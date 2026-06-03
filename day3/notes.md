@@ -212,3 +212,84 @@ terraform apply -input=false -auto-approve tfplan
 - Add `aws_s3_bucket_public_access_block` to block public access.
 - Add `versioning` and `server_side_encryption_configuration` for durability and encryption.
 - Configure a remote backend for state (S3 + DynamoDB lock).
+
+---
+
+## Terraform state
+
+- What is state:
+  - Terraform state is a snapshot of the infrastructure that Terraform manages. It maps resources in configuration to real-world objects and stores metadata used by Terraform to create/update/destroy resources.
+
+- Local vs remote state:
+  - Local state: stored in a `terraform.tfstate` file in the working directory. Simple but not suitable for teams.
+  - Remote state (recommended for teams): stored in a remote backend such as S3, Azure Blob Storage, or HashiCorp Consul. Remote backends support locking and access control.
+
+- Common remote backend for AWS teams:
+  - Backend: S3 for storing the state object + DynamoDB for state locking to prevent concurrent writes.
+
+- Example `backend` block (S3 + DynamoDB):
+
+```hcl
+terraform {
+  backend "s3" {
+    bucket         = "my-terraform-state-bucket"
+    key            = "project-name/terraform.tfstate"
+    region         = "ap-south-1"
+    encrypt        = true
+    dynamodb_table = "terraform-locks"
+  }
+}
+```
+
+- Initialize or reconfigure backend:
+
+```bash
+terraform init                   # initial init will set up the backend
+terraform init -reconfigure      # reconfigure backend settings
+terraform init -backend-config="path/to/backend.hcl"
+```
+
+- State commands and use cases:
+  - `terraform state list` — list resources tracked in state
+  - `terraform state show <address>` — show attributes for a tracked resource
+  - `terraform state pull` — download the raw state file
+  - `terraform state push <path>` — push a state file to the backend (advanced; use sparingly)
+  - `terraform state mv <from> <to>` — move/rename resources in state
+  - `terraform state rm <address>` — remove an item from state (resource left in cloud)
+  - `terraform import <address> <id>` — import an existing resource into state
+  - `terraform state replace-provider` — update provider addresses in state when upgrading provider source
+
+Examples:
+
+```bash
+terraform state list
+terraform state show aws_s3_bucket.first_bucket
+terraform import aws_s3_bucket.first_bucket my-tf-test-bucket-12345654321
+terraform state mv aws_s3_bucket.old aws_s3_bucket.new
+```
+
+- State locking and concurrency:
+  - Use DynamoDB or a backend that supports locking to avoid concurrent `apply` operations corrupting state.
+  - Ensure CI pipelines obtain locks by using the configured backend; do not run parallel `terraform apply` that share the same state key.
+
+- Security and best practices:
+  - Keep sensitive values out of state when possible; treat state as sensitive: it may contain secrets (e.g., DB passwords, ARNs).
+  - Encrypt state at rest (S3 `encrypt = true`) and enforce access via IAM.
+  - Enable S3 bucket versioning for state bucket to allow rollback of accidental state corruption.
+  - Restrict who can access or modify the remote state via IAM policies.
+
+- Backing up and recovery:
+  - With S3 versioning enabled, you can recover an earlier state file if needed.
+  - Use `terraform state pull` to obtain a local copy for inspection.
+
+- Migrating local state to a remote backend:
+  1. Configure the `backend` block in your configuration.
+  2. Run `terraform init` and follow prompts to migrate state to the backend.
+
+```bash
+terraform init
+```
+
+---
+
+If you want, I can add an example `backend.hcl` and a small README describing how to create the S3 bucket and DynamoDB table for locking.
