@@ -1,2 +1,4 @@
 Terraform-Full-Course-Aws/
 .env
+.terraform/
+.terraform.lock.hcl
