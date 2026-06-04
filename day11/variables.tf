@@ -19,3 +19,7 @@ variable "envionment_tags"{
 variable "bucket_name"{
     default="nfdiu iubsdi fsidbi fwbsdyib uifcbweu8di iwfbiuw dhwiun wwiuecnuicwn ifnwijenfiuw nuwb JDBIBFIUNFIWUNOI FIOWNFOI293U092 u()()() NFNOku wucbwu"
 }
+
+variable "multiple_ports"{
+    default="80,443,8080"
+}
