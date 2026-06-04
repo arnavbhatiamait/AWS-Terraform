@@ -1,3 +1,3 @@
 locals {
-    formatted_project_name = lower(var.project_name)
+    formatted_project_name = lower(replace(var.project_name, " ", "-"))
 }
