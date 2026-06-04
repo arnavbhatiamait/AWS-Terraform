@@ -32,9 +32,11 @@ resource "aws_s3_bucket_policy" "bucket_policy" {
         "Sid" : "Statement1",
         "Effect" : "Allow",
         "Principal" : {
-          "AWS" : "cloudfront.amazonaws.com" # ! This allows CloudFront to access the S3 bucket securely, ensuring that only CloudFront can read the objects in the bucket while keeping it private from public access.
+          "Service" : "cloudfront.amazonaws.com" # ! This allows CloudFront to access the S3 bucket securely, ensuring that only CloudFront can read the objects in the bucket while keeping it private from public access.
         },
-        "Action" : ["s3:GetObject", "s3:ListBucket"],
+        "Action" : ["s3:GetObject",
+        #  "s3:ListBucket"
+         ],
         "Resource" : "${aws_s3_bucket.firstbucket.arn}/*"
         Condition = {
           StringEquals = {
