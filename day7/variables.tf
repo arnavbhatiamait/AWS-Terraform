@@ -14,3 +14,15 @@ variable "instance_count"{
     type = number
     default = 1
 }
+
+variable "monitoring_enabled"{
+    description = "Enable detailed monitoring for EC2 instances"
+    type = bool
+    default = true
+}
+
+variable "associate_public_ip"{
+    description = "Associate public IP address with EC2 instances"
+    type = bool
+    default = true
+}
