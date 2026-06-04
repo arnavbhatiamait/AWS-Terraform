@@ -4,4 +4,5 @@ locals {
         var.default_tag,
         var.envionment_tags,
     )
+    formatted_bucket_name=replace(replace(lower(substr(var.bucket_name,0,63)), " ", "-"), "()", "-")
 }
