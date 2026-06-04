@@ -23,3 +23,13 @@ variable "bucket_name"{
 variable "multiple_ports"{
     default="80,443,8080"
 }
+variable "environment"{
+    default="dev"
+}
+variable "instance_size"{
+    default={
+        dev="t3.micro"
+        prod="t3.large"
+        stage="t3.medium"
+    }
+}

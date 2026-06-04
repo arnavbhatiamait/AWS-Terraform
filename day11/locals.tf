@@ -13,4 +13,5 @@ locals {
             description = "Allow traffic on port ${port}"
         }
     ]
+    instance_size=lookup(var.instance_size, var.environment, "t3.micro")
 }

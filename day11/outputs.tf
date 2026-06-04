@@ -18,3 +18,7 @@ output "sg_rules" {
     description = "The list of security group rules generated from the ports list"
     value       = local.sg_rules
 }
+output "instance_size" {
+    description = "The instance size based on the environment"
+    value       = local.instance_size
+}
