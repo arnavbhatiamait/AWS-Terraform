@@ -65,3 +65,6 @@ variable "user_locations"{
 variable "default_location"{
     default=["us-east-1"]
 }
+variable "monthly_costs"{
+    default=[-100, 200, 300, -50, 400]
+}

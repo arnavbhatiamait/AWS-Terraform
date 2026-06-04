@@ -35,3 +35,7 @@ output "unique_locations" {
     description = "Unique set of all locations"
     value       = local.unique_locations
 }
+output "positive_cost" {
+    description = "Absolute value of monthly costs"
+    value       = local.positive_cost
+}
