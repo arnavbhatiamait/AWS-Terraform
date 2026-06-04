@@ -33,3 +33,15 @@ variable "instance_size"{
         stage="t3.medium"
     }
 }
+
+variable "instance_type"{
+    default="t3.micro"
+    validation{
+        condition= length(var.instance_type)>=2 && length(var.instance_type)<=20
+        error_message="Instance type must be between 2 and 20 characters long."
+    }
+    validation{
+        condition= can(regex("^t3\\.(micro|small|medium|large)$", var.instance_type))
+        error_message="Instance type must be one of the following: t3.micro, t3.small, t3.medium, t3.large."
+    }
+}
