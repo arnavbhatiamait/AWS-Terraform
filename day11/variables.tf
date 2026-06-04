@@ -57,3 +57,11 @@ variable credentials{
     default="xyz234"
     sensitive=true
 }
+
+variable "user_locations"{
+    default=["us-east-1", "us-west-2", "eu-west-1","us-east-1"]
+
+}
+variable "default_location"{
+    default=["us-east-1"]
+}

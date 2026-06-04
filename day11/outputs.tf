@@ -27,3 +27,11 @@ output "credentials" {
     value       = var.credentials
     sensitive   = true
 }
+output "all_locations" {
+    description = "Combined list of user locations and default location"
+    value       = local.all_locations
+}
+output "unique_locations" {
+    description = "Unique set of all locations"
+    value       = local.unique_locations
+}
