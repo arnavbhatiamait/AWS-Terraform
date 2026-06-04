@@ -2,3 +2,10 @@ Terraform-Full-Course-Aws/
 .env
 .terraform/
 .terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+.terraform.tfstate
+.terraform.tfstate.backup
+*.log
+*.tfvars
+*.terraform
