@@ -51,3 +51,9 @@ variable "tags"{
         created_by = "Terraform"
     }
 }
+
+variable "ingress_values"{
+    description = "Tuple of ingress rule values (from_port, to_port, protocol)"
+    type = tuple([number, number, string])
+    default = [80, 80, "tcp"]
+}
