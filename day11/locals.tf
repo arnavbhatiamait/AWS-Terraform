@@ -22,4 +22,9 @@ locals {
   min_cost     = min(local.positive_cost...)
   total_cost   = sum(local.positive_cost)
   average_cost = local.total_cost / length(local.positive_cost)
+  currrent_time = timestamp()
+  format1=formatdate("YYYY-MM-DD HH:mm:ss", timestamp())
+  format2=formatdate("DD/MM/YYYY", timestamp())
+
+
 }

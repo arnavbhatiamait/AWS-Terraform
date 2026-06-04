@@ -55,3 +55,16 @@ output "average_cost" {
     description = "Average monthly cost"
     value       = local.average_cost
 }
+output "current_time" {
+    description = "The current timestamp when the output is generated"
+    value       = local.currrent_time
+}
+output "formatted_time1" {
+    description = "Current time formatted as YYYY-MM-DD HH:mm:ss"
+    value       = local.format1
+}
+output "formatted_time2" {
+    description = "Current time formatted as DD/MM/YYYY"
+    value       = local.format2
+}
+
