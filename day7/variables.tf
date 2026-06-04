@@ -32,3 +32,14 @@ variable "cidr_block"{
     type = list(string)
     default = ["10.0.0.0/16", "198.168.0.0/16","172.16.0.0/12"]
 }
+variable "allowed_vms"{
+    description = "List of allowed VM types"
+    type = list(string)
+    default = ["t3.micro", "t3.small", "t3a.micro"]
+}
+
+variable "allowed_regions"{
+    description = "Set of allowed AWS regions"
+    type = set(string)
+    default = ["us-east-1", "us-west-2", "ap-south-1"]
+}

@@ -2,8 +2,10 @@
 resource "aws_instance" "example" {
     count =var.instance_count 
     ami = "ami-016f910f55cb4096d"
-    instance_type = "t3.micro"
-    region = var.region
+    instance_type = var.allowed_vms[0]
+    # region = var.region
+    # ! use set
+    region=tolist(var.allowed_regions)[2]
     monitoring = var.monitoring_enabled
     associate_public_ip_address = var.associate_public_ip
     tags = {
