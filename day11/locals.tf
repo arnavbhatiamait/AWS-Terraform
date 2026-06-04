@@ -6,5 +6,11 @@ locals {
     )
     formatted_bucket_name=replace(replace(lower(substr(var.bucket_name,0,63)), " ", "-"), "()", "-")
     ports_list=split(",", var.multiple_ports)
-    sg_rules=
+    sg_rules=[
+        for port in local.ports_list : {
+            name = "Allow port ${port}"
+            port = port
+            description = "Allow traffic on port ${port}"
+        }
+    ]
 }
