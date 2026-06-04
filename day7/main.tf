@@ -8,10 +8,12 @@ resource "aws_instance" "example" {
     region=tolist(var.allowed_regions)[2]
     monitoring = var.monitoring_enabled
     associate_public_ip_address = var.associate_public_ip
-    tags = {
-        Name = local.ec2_name
-        Environment = var.enviornment
-    }
+    # tags = {
+    #     Name = local.ec2_name
+    #     Environment = var.enviornment
+    # }
+
+    tags = var.tags
 }
 
 # ! added security groups

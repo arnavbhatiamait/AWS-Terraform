@@ -43,3 +43,11 @@ variable "allowed_regions"{
     type = set(string)
     default = ["us-east-1", "us-west-2", "ap-south-1"]
 }
+variable "tags"{
+    type = map(string)
+    default = {
+        Environment = "dev"
+        name="dev-EC2-instance"
+        created_by = "Terraform"
+    }
+}
