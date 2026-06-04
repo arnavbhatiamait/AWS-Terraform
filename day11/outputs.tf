@@ -68,3 +68,11 @@ output "formatted_time2" {
     value       = local.format2
 }
 
+output "config_file_exists" {
+    description = "Whether the config file exists"
+    value       = local.config_file_exists
+}
+output "config_data" {
+    description = "The data read from the config file, or an empty object if the file does not exist"
+    value       = local.config_data
+}

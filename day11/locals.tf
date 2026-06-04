@@ -26,5 +26,16 @@ locals {
   format1=formatdate("YYYY-MM-DD HH:mm:ss", timestamp())
   format2=formatdate("DD/MM/YYYY", timestamp())
 
+    config_file_exists=fileexists("./config.json")
+    config_data=fileexists("./config.json") ? jsondecode(file("./config.json")) : {
+        bucket_name = "default-bucket-name"
+        default_tag = {
+            Owner = "Default Owner"
+            Project = "Default Project"
+        }
+        envionment_tags = {
+            Environment = "Default Environment"
+        }
+    }
 
 }

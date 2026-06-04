@@ -1,0 +1,10 @@
+{
+    "bucket_name": "my-unique-bucket-name",
+    "default_tag": {
+        "Owner": "Arnav Bhatia",
+        "Project": "Terraform Learning"
+    },
+    "envionment_tags": {
+        "Environment": "Development"
+    }
+}
