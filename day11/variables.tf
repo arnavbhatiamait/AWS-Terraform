@@ -52,3 +52,8 @@ variable "backup_name"{
         error_message="Backup name must end with '_backup'."
     }
 }
+
+variable credentials{
+    default="xyz234"
+    sensitive=true
+}

@@ -22,3 +22,8 @@ output "instance_size" {
     description = "The instance size based on the environment"
     value       = local.instance_size
 }
+output "credentials" {
+    description = "Sensitive credentials output"
+    value       = var.credentials
+    sensitive   = true
+}
