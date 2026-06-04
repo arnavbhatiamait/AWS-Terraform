@@ -5,7 +5,8 @@ resource "aws_instance" "example" {
     instance_type = var.allowed_vms[0]
     # region = var.region
     # ! use set
-    region=tolist(var.allowed_regions)[2]
+    # region=tolist(var.allowed_regions)[2]
+    region= var.config.region
     monitoring = var.monitoring_enabled
     associate_public_ip_address = var.associate_public_ip
     # tags = {

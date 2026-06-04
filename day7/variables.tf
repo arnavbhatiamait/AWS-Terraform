@@ -57,3 +57,16 @@ variable "ingress_values"{
     type = tuple([number, number, string])
     default = [80, 80, "tcp"]
 }
+
+variable "config"{
+    type = object({
+        region = string
+        instance_count=number
+        monitoring = bool
+    })
+    default = {
+        region = "ap-south-1"
+        instance_count = 1
+        monitoring = true
+    }
+}
