@@ -1,2 +1,3 @@
 https://developer.hashicorp.com/terraform/docs
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs
+policy generator -> https://awspolicygen.s3.amazonaws.com/policygen.html

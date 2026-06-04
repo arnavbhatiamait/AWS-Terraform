@@ -21,3 +21,26 @@ resource "aws_cloudfront_origin_access_control" "oac"{
 
 # ! bucket policy -> used to allow cloudfront distribution to access the private bucket. It defines the permissions for the bucket, allowing cloudfront to read the objects in the bucket while keeping it private from public access.
 
+resource "aws_s3_bucket_policy" "bucket_policy"{
+    bucket = aws_s3_bucket.firstbucket.id
+    depends_on = [ aws_s3_public_access_block.block ]
+policy=jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid":"Statement1",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "cloudfront.amazonaws.com" # ! This allows CloudFront to access the S3 bucket securely, ensuring that only CloudFront can read the objects in the bucket while keeping it private from public access.
+            },
+            "Action": ["s3:GetObject","s3:ListBucket"],
+            "Resource": "${aws_s3_bucket.firstbucket.arn}/*"
+            Condition = {
+                StringEquals = {
+                    "AWS:SourceArn" = aws_cloudfront_distribution.s3_distribution.arn
+                }
+            }
+            # ! This policy allows CloudFront to read all objects in the S3 bucket, enabling it to serve content to users while maintaining the security of the bucket.
+        }   ]
+})
+}
