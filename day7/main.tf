@@ -11,3 +11,31 @@ resource "aws_instance" "example" {
         Environment = var.enviornment
     }
 }
+
+# ! added security groups
+resource "aws_security_group" "allow_tls" {
+  name        = "allow_tls"
+  description = "Allow TLS inbound traffic and all outbound traffic"
+
+  tags = {
+    Name = "allow_tls"
+  }
+}
+
+# ! added security group rules
+resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+  security_group_id = aws_security_group.allow_tls.id
+  cidr_ipv4         = var.cidr_block[0]  # Using the first CIDR block from the list variable
+  from_port         = 443
+  ip_protocol       = "tcp"
+  to_port           = 443
+}
+
+# ! added egress rules to allow all outbound traffic
+# ~ egress-> outgoing traffic from the security group
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.allow_tls.id
+  cidr_ipv4         = var.cidr_block[0]  # Using the first CIDR block from the list variable
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
