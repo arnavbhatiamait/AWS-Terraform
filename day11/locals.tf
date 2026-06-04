@@ -18,4 +18,8 @@ locals {
     all_locations=concat(var.user_locations, var.default_location)
     unique_locations=toset(local.all_locations)
     positive_cost=[for cost in var.monthly_costs : abs(cost)]
+ max_cost     = max(local.positive_cost...)
+  min_cost     = min(local.positive_cost...)
+  total_cost   = sum(local.positive_cost)
+  average_cost = local.total_cost / length(local.positive_cost)
 }

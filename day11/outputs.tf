@@ -39,3 +39,19 @@ output "positive_cost" {
     description = "Absolute value of monthly costs"
     value       = local.positive_cost
 }
+output "max_cost" {
+    description = "Maximum monthly cost"
+    value       = local.max_cost
+}
+output "min_cost" {
+    description = "Minimum monthly cost"
+    value       = local.min_cost
+}
+output "total_cost" {
+    description = "Total monthly cost"
+    value       = local.total_cost
+}
+output "average_cost" {
+    description = "Average monthly cost"
+    value       = local.average_cost
+}
