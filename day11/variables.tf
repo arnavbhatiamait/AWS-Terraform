@@ -45,3 +45,10 @@ variable "instance_type"{
         error_message="Instance type must be one of the following: t3.micro, t3.small, t3.medium, t3.large."
     }
 }
+variable "backup_name"{
+    default="daily_backup"
+    validation{
+        condition= endswith(var.backup_name, "_backup")
+        error_message="Backup name must end with '_backup'."
+    }
+}
