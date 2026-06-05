@@ -146,3 +146,43 @@ resource "aws_route" "secondary_to_primary_route"{
     vpc_peering_connection_id = aws_vpc_peering_connection.secondary_to_primary.id
     depends_on = [aws_vpc_peering_connection.secondary_to_primary]
 }
+
+# ! creating security group in both VPCs
+resource "aws_security_group" "primary_sg"{
+    provider = aws.primary
+    name = "primary-sg-${var.primary_reg}"
+    description = "Security group for primary VPC"
+    vpc_id = aws_vpc.primary_vpc.id
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = [var.primary_vpc_cidr]
+    }
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+}
+resource "aws_security_group" "secondary_sg"{
+    provider = aws.secondary
+    name = "secondary-sg-${var.secondary_reg}"
+    description = "Security group for secondary VPC"
+    vpc_id = aws_vpc.secondary_vpc.id
+    ingress {
+        from_port = 22
+        to_port = 22
+        protocol = "tcp"
+        cidr_blocks = [var.secondary_vpc_cidr]
+    }
+    egress {
+        from_port = 0
+        to_port = 0
+        protocol = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+}
+
+# ! creating EC2 instances in both VPCs
