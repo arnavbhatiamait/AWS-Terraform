@@ -94,3 +94,17 @@ resource "aws_route_table" "secondary_rt"{
     }
 }
 
+resource "aws_route_table_association" "primary_rta"{
+    provider = aws.primary
+    subnet_id = aws_subnet.primary_subnet.id
+    route_table_id = aws_route_table.primary_rt.id
+}
+
+resource "aws_route_table_association" "secondary_rta"{
+    provider = aws.secondary
+    subnet_id = aws_subnet.secondary_subnet.id
+    route_table_id = aws_route_table.secondary_rt.id
+}
+
+
+
