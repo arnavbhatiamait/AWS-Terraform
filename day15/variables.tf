@@ -1,14 +1,21 @@
 # ! variable 
-variable "primary"{
+variable "primary_reg"{
     description = "Primary AWS provider configuration"
     default="ap-south-1"
 }
-variable "secondary"{
+variable "secondary_reg"{
     description = "Secondary AWS provider configuration"
     default="us-east-1"
 }
 
-
+variable "primary_vpc_cidr"{
+    description = "CIDR block for the primary VPC"
+    default = "10.0.0.0/16"
+}
+variable "secondary_vpc_cidr"{
+    description = "CIDR block for the secondary VPC"
+    default = "10.1.0.0/16"
+}
 variable "enviornment"{
     description = "Environment for the resources"
     type = string
