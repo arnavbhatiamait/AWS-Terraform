@@ -8,3 +8,7 @@ output "password"{
   value = {for user,profile in aws_iam_user_login_profile.users: user => "Password created"}
   sensitive = true
 }
+output "secrets"{
+  value = {for user,secret in aws_secretsmanager_secret.user_password: user => secret.arn}
+  # sensitive = true
+}
