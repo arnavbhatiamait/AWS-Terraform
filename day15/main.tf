@@ -117,3 +117,14 @@ resource "aws_vpc_peering_connection" "primary_to_secondary"{
         Environment = "Demo"
     }
 }
+
+resource "aws_vpc_peering_connection" "secondary_to_primary" {
+    provider = aws.secondary
+    vpc_id = aws_vpc.secondary_vpc.id
+    peer_vpc_id = aws_vpc.primary_vpc.id
+    peer_region = var.primary_reg
+    tags = {
+        Name = "secondary-to-primary-peering"
+        Environment = "Demo"
+    }
+}
