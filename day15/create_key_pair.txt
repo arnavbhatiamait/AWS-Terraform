@@ -1,0 +1,21 @@
+Command -> 
+>> aws ec2 create-key-pair --key-name vpc-pairing-demo --region ap-south-1 --query "KeyMaterial" --output text > vpc-peering-demo.pem
+
+This command creates an EC2 key pair in AWS and saves only the private key material to a local file.
+
+What each part does:
+
+aws ec2 create-key-pair creates a new EC2 key pair in AWS.
+--key-name vpc-pairing-demo names the key pair in AWS.
+--region ap-south-1 creates it in the Mumbai region.
+--query "KeyMaterial" extracts just the private key text from the AWS response.
+--output text prints it as plain text instead of JSON.
+> vpc-peering-demo.pem redirects that private key into a file named vpc-peering-demo.pem.
+Important detail:
+
+AWS stores the public key portion.
+The private key is returned only once, at creation time.
+You should protect the .pem file carefully because anyone with it can use it to connect to instances that trust this key pair.
+One thing to note: the key pair name in AWS is vpc-pairing-demo, but the file you save locally is vpc-peering-demo.pem. Those names do not have to match, but the mismatch can be confusing.
+
+If you want, I can also explain how to use this .pem file with SSH or how to create the matching security group rules.
