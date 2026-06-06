@@ -131,3 +131,31 @@ resource "aws_lambda_layer_version" "pillow_layer" {
     description = "Lambda layer containing Pillow library for image processing"
 
 }
+
+# ! Lambda function
+data "archive_file" "lambda_zip"{
+    
+    type = "zip"
+    source_file="${path.module}/lambda/lambda_function.py"
+    output_path="${path.module}/lambda_function.zip"
+}
+
+resource "aws_lambda_function" "image_processor" {
+    # file_name=data.archive_file.lambda_zip.output_path
+    function_name = local.lambda_function_name
+    role = aws_iam_role.lambda_role.arn
+    handler = "lambda_function.lambda_handler"
+    runtime = "python3.12"
+    timeout = var.lambda_timeout
+    memory_size = var.lambda_memory_size
+    filename = data.archive_file.lambda_zip.output_path
+    source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+    layers = [aws_lambda_layer_version.pillow_layer.arn]
+
+
+    environment {
+        variables = {
+            PROCESSED_BUCKET = aws_s3_bucket.processed_bucket.id
+            LOG_LEVEL = "INFO"}
+    }
+}
