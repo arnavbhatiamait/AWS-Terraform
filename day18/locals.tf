@@ -122,3 +122,12 @@ resource "aws_iam_role_policy" "lambda_policy" {
     ]
   })
 }
+
+# ! lambda layer
+resource "aws_lambda_layer_version" "pillow_layer" {
+    filename="${path.module}/pillow_layer.zip"
+    layer_name="${var.project_name}-pillow-layer"
+    compatible_runtimes=["python3.12"]
+    description = "Lambda layer containing Pillow library for image processing"
+
+}
