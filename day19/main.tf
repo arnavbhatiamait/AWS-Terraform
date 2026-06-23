@@ -51,18 +51,18 @@ resource "aws_instance" "demo" {
   }
 
     # ! local exec
-      provisioner "local-exec" {
-    command = "echo 'Local-exec: created instance ${self.id} with IP ${self.public_ip}'"
-  }
+#       provisioner "local-exec" {
+#     command = "echo 'Local-exec: created instance ${self.id} with IP ${self.public_ip}'"
+#   }
 
     # ! remote exec
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "sudo apt-get update",
-#       "echo 'Hello from remote-exec'| sudo tee /tmp/remote-exec.txt"
-# ]
-#   }
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "echo 'Hello from remote-exec'| sudo tee /tmp/remote-exec.txt"
+]
+  }
 
 #   ! file provisioner
 #   provisioner "file" {
