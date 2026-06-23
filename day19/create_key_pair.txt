@@ -1,0 +1,2 @@
+aws ec2 create-key-pair --key-name tf-demo-key --query 'KeyMaterial' --output text > tf-demo-key.pem 
+chmod 400 tf-demo-key.pem
