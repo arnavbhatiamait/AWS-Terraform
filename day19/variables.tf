@@ -7,11 +7,13 @@ variable "instance_type" {
 variable "key_name" {
   description = "Name of an existing EC2 key pair (must already exist in the chosen region)"
   type        = string
+  default     = "tf-demo-key"
 }
 
 variable "private_key_path" {
   description = "Path to the private key file for SSH (used by remote provisioners)"
   type        = string
+  default     = "./tf-demo-key.pem"
 }
 
 variable "ssh_user" {

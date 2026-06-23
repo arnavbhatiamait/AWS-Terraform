@@ -11,10 +11,13 @@ data "aws_ami" "ubuntu" {
         values = ["hvm"]
     }
 }
-
+data "aws_vpc" "default" {
+  default = true
+}
 resource "aws_security_group" "ssh" {
   name        = "tf-prov-demo-ssh"
   description = "Allow SSH inbound"
+  vpc_id      = data.aws_vpc.default.id
 
   ingress {
     from_port   = 22
@@ -48,28 +51,28 @@ resource "aws_instance" "demo" {
   }
 
     # ! local exec
-      # provisioner "local-exec" {
-  #   command = "echo 'Local-exec: created instance ${self.id} with IP ${self.public_ip}'"
-  # }
+      provisioner "local-exec" {
+    command = "echo 'Local-exec: created instance ${self.id} with IP ${self.public_ip}'"
+  }
 
     # ! remote exec
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt-get update",
-      "echo 'Hello from remote-exec'| sudo tee /tmp/remote-exec.txt"
-]
-  }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "sudo apt-get update",
+#       "echo 'Hello from remote-exec'| sudo tee /tmp/remote-exec.txt"
+# ]
+#   }
 
 #   ! file provisioner
-  provisioner "file" {
-    source      = "${path.module}/scripts/welcome.sh"
-    destination = "/tmp/welcome.sh"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "chmod +x /tmp/welcome.sh",
-      "sudo /tmp/welcome.sh"
-    ]
-  }
+#   provisioner "file" {
+#     source      = "${path.module}/scripts/welcome.sh"
+#     destination = "/tmp/welcome.sh"
+#   }
+#   provisioner "remote-exec" {
+#     inline = [
+#       "chmod +x /tmp/welcome.sh",
+#       "sudo /tmp/welcome.sh"
+#     ]
+#   }
 }
